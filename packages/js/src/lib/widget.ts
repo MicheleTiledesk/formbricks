@@ -44,15 +44,15 @@ export const renderWidget = async (survey: TSurvey) => {
     surveyState
   );
 
-  const productOverwrites = survey.productOverwrites ?? {};
-  const brandColor = productOverwrites.brandColor ?? product.brandColor;
-  const highlightBorderColor = productOverwrites.highlightBorderColor ?? product.highlightBorderColor;
-  const clickOutside = productOverwrites.clickOutsideClose ?? product.clickOutsideClose;
-  const darkOverlay = productOverwrites.darkOverlay ?? product.darkOverlay;
-  const placement = productOverwrites.placement ?? product.placement;
-  const isBrandingEnabled = product.inAppSurveyBranding;
-  const isResponseSubmitted = surveyState.isResponseFinished();
-  const formbricksSurveys = await loadFormbricksSurveysExternally();
+  const { brandColor, highlightBorderColor, clickOutsideClose, darkOverlay, placement, inAppSurveyBranding } = product;
+  const { brandColor: overwriteBrandColor, highlightBorderColor: overwriteHighlightBorderColor, clickOutsideClose: overwriteClickOutsideClose, darkOverlay: overwriteDarkOverlay, placement: overwritePlacement } = productOverwrites;
+  
+  const finalBrandColor = overwriteBrandColor ?? brandColor;
+  const finalHighlightBorderColor = overwriteHighlightBorderColor ?? highlightBorderColor;
+  const finalClickOutsideClose = overwriteClickOutsideClose ?? clickOutsideClose;
+  const finalDarkOverlay = overwriteDarkOverlay ?? darkOverlay;
+  const finalPlacement = overwritePlacement ?? placement;
+  const isBrandingEnabled = inAppSurveyBranding;
 
   setTimeout(() => {
     formbricksSurveys.renderSurveyModal({
