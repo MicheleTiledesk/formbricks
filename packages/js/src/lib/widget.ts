@@ -28,14 +28,16 @@ export const renderWidget = async (survey: TSurvey) => {
     logger.debug(`Delaying survey by ${survey.delay} seconds.`);
   }
 
-  const product = config.get().state.product;
-
-  const surveyState = new SurveyState(survey.id, null, null, config.get().userId);
-
+  const configData = config.get();
+  
+  const product = configData.state.product;
+  
+  const surveyState = new SurveyState(survey.id, null, null, configData.userId);
+  
   const responseQueue = new ResponseQueue(
     {
-      apiHost: config.get().apiHost,
-      environmentId: config.get().environmentId,
+      apiHost: configData.apiHost,
+      environmentId: configData.environmentId,
       retryAttempts: 2,
       onResponseSendingFailed: () => {
         setIsError(true);
@@ -43,31 +45,29 @@ export const renderWidget = async (survey: TSurvey) => {
     },
     surveyState
   );
-
-  const productOverwrites = survey.productOverwrites ?? {};
-  const brandColor = productOverwrites.brandColor ?? product.brandColor;
-  const highlightBorderColor = productOverwrites.highlightBorderColor ?? product.highlightBorderColor;
-  const clickOutside = productOverwrites.clickOutsideClose ?? product.clickOutsideClose;
-  const darkOverlay = productOverwrites.darkOverlay ?? product.darkOverlay;
-  const placement = productOverwrites.placement ?? product.placement;
-  const isBrandingEnabled = product.inAppSurveyBranding;
-  const isResponseSubmitted = surveyState.isResponseFinished();
-  const formbricksSurveys = await loadFormbricksSurveysExternally();
-
-  setTimeout(() => {
-    formbricksSurveys.renderSurveyModal({
-      survey: survey,
-      brandColor,
-      isBrandingEnabled: isBrandingEnabled,
-      clickOutside,
-      darkOverlay,
-      highlightBorderColor,
-      placement,
-      isResponseSubmitted,
-      getSetIsError: (f: (value: boolean) => void) => {
-        setIsError = f;
-      },
-      onDisplay: async () => {
+  
+  const { userId } = configData;
+  
+  const api = new FormbricksAPI({
+    apiHost: configData.apiHost,
+    environmentId: configData.environmentId,
+  });
+  
+  const existingDisplays = configData.state.displays;
+  
+  const previousConfig = configData;
+  
+  const displays = configData.state.displays;
+  
+  const lastDisplay = displays && displays[displays.length - 1];
+  
+  const previousConfig = configData;
+  
+  await sync({
+    apiHost: configData.apiHost,
+    environmentId: configData.environmentId,
+    userId: configData.userId,
+  });
         const { userId } = config.get();
         // if config does not have a person, we store the displays in local storage
         if (!userId) {
