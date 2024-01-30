@@ -40,9 +40,9 @@ export function Survey({
   const [loadingElement, setLoadingElement] = useState(false);
   const [history, setHistory] = useState<string[]>([]);
   const [responseData, setResponseData] = useState<TResponseData>({});
-  const [ttc, setTtc] = useState<TResponseTtc>({});
-
-  const currentQuestionIndex = survey.questions.findIndex((q) => q.id === questionId);
+  const [timeToComplete, setTimeToComplete] = useState<TResponseTtc>({});
+  
+  let currentQuestionIndexTemp = currentQuestionIndex;
   const currentQuestion = useMemo(() => {
     if (questionId === "end" && !survey.thankYouCard.enabled) {
       const newHistory = [...history];
