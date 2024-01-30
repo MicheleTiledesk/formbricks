@@ -8,12 +8,12 @@ import { TSurvey } from "@formbricks/types/surveys";
 const createContainerId = () => `formbricks-survey-container`;
 
 interface SurveyProps {
-  survey: TSurvey;
-  brandColor: string;
-  isBrandingEnabled: boolean;
-  activeQuestionId?: string;
-  getSetIsError?: (getSetError: (value: boolean) => void) => void;
-  onRetry?: () => void;
+  // ...
+  // isResponseSubmitted is a boolean indicating whether a response has been submitted or not.
+  // This property is used to control the behavior of the component based on the submission status.
+  isResponseSubmitted: boolean;
+  // ...
+}
   onDisplay?: () => void;
   onResponse?: (response: TResponseUpdate) => void;
   onFinished?: () => void;
