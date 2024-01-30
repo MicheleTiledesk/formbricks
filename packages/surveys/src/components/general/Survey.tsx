@@ -103,8 +103,8 @@ export function Survey({
         currQuesTemp = questions[0];
       }
     }
-    if (currIdxTemp === -1) throw new Error("Question not found");
-    if (currQuesTemp?.logic && currQuesTemp?.logic.length > 0 && currentQuestion) {
+    if (currIdxTemp === -1) throw new QuestionNotFoundError();
+    if (!prevQuestionId) throw new QuestionNotFoundError();
       for (let logic of currQuesTemp.logic) {
         if (!logic.destination) continue;
         if (
