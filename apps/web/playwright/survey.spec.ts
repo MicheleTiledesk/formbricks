@@ -277,16 +277,16 @@ test.describe("API Tests", () => {
 
     await page.goto(`/environments/${environmentId}/settings/api-keys`);
 
-    await page.getByRole("button", { name: "Add Production API Key" }).isVisible();
-    await page.getByRole("button", { name: "Add Production API Key" }).click();
-    await page.getByPlaceholder("e.g. GitHub, PostHog, Slack").fill("E2E Test API Key");
-    await page.getByRole("button", { name: "Add API Key" }).click();
-    await page.locator("main").filter({ hasText: "Account" }).getByRole("img").click();
-
-    apiKey = await page.evaluate("navigator.clipboard.readText()");
-  });
-
-  test("List Surveys from API", async ({ request }) => {
+    const ADD_PRODUCTION_API_KEY = "Add Production API Key";
+    const ADD_API_KEY = "Add API Key";
+    const E2E_TEST_API_KEY = "E2E Test API Key";
+    const MY_NEW_SURVEY_FROM_API = "My new Survey from API";
+    const MY_UPDATED_SURVEY_FROM_API = "My updated Survey from API";
+    
+    await page.getByRole("button", { name: ADD_PRODUCTION_API_KEY }).isVisible();
+    await page.getByRole("button", { name: ADD_PRODUCTION_API_KEY }).click();
+    await page.getByPlaceholder("e.g. GitHub, PostHog, Slack").fill(E2E_TEST_API_KEY);
+    await page.getByRole("button", { name: ADD_API_KEY }).click();
     const response = await request.get(`/api/v1/management/surveys`, {
       headers: {
         "x-api-key": apiKey,
