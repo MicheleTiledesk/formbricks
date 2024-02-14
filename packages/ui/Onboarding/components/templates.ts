@@ -1,13 +1,13 @@
-import { createId } from "@paralleldrive/cuid2";
-
-import { TSurveyHiddenFields, TSurveyQuestionType, TSurveyWelcomeCard } from "@formbricks/types/surveys";
-import { TTemplate } from "@formbricks/types/templates";
-
-const thankYouCardDefault = {
-  enabled: true,
-  headline: "Thank you!",
-  subheader: "We appreciate your feedback.",
-  buttonLabel: "Create your own Survey",
+function createQuestion(id: string, type: TSurveyQuestionType, headline: string, required: boolean, subheader: string = '', inputType: string = 'text'): QuestionType {
+  return {
+    id,
+    type,
+    headline,
+    required,
+    subheader,
+    inputType,
+  };
+}
   buttonLink: "https://formbricks.com/signup",
 };
 
