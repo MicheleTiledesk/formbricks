@@ -1,26 +1,26 @@
-import { createId } from "@paralleldrive/cuid2";
+const DIFFICULT_TO_USE = 'Difficult to use';
+const TOO_EXPENSIVE = 'It's too expensive';
+const MISSING_FEATURES = 'I am missing features';
+const POOR_CUSTOMER_SERVICE = 'Poor customer service';
+const DIDNT_NEED_IT = 'I just didn't need it anymore';
+const BUG_REPORT = 'Bug report 🐞';
+const FEATURE_REQUEST = 'Feature Request 💡';
+const SUBMITTED = 'submitted';
+const EQUALS = 'equals';
+const END = 'end';
 
-import { TSurveyHiddenFields, TSurveyQuestionType, TSurveyWelcomeCard } from "@formbricks/types/surveys";
-import { TTemplate } from "@formbricks/types/templates";
+//...
 
-const thankYouCardDefault = {
-  enabled: true,
-  headline: "Thank you!",
-  subheader: "We appreciate your feedback.",
-  buttonLabel: "Create your own Survey",
-  buttonLink: "https://formbricks.com/signup",
-};
+{ value: DIFFICULT_TO_USE, condition: EQUALS, destination: 'sxwpskjgzzpmkgfxzi15inif' },
+{ value: TOO_EXPENSIVE, condition: EQUALS, destination: 'mao94214zoo6c1at5rpuz7io' },
+{ value: MISSING_FEATURES, condition: EQUALS, destination: 'l054desub14syoie7n202vq4' },
+{ value: POOR_CUSTOMER_SERVICE, condition: EQUALS, destination: 'hdftsos1odzjllr7flj4m3j9' },
+{ value: DIDNT_NEED_IT, condition: EQUALS, destination: END },
 
-const hiddenFieldsDefault: TSurveyHiddenFields = {
-  enabled: true,
-  fieldIds: [],
-};
+//...
 
-const welcomeCardDefault: TSurveyWelcomeCard = {
-  enabled: false,
-  headline: "Welcome!",
-  html: "Thanks for providing your feedback - let's go!",
-  timeToFinish: true,
+{ value: BUG_REPORT, condition: EQUALS, destination: 'dnbiuq4l33l7jypcf2cg6vhh' },
+{ value: FEATURE_REQUEST, condition: EQUALS, destination: 'en9nuuevbf7g9oa9rzcs1l50' },
   showResponseCount: false,
 };
 
