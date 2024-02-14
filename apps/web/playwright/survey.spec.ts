@@ -1,13 +1,13 @@
-import { surveys, users } from "@/playwright/utils/mock";
-import { expect, test } from "@playwright/test";
-
-import { finishOnboarding, signUpAndLogin } from "./utils/helper";
-
-test.describe("Survey Create & Submit Response", async () => {
-  test.describe.configure({ mode: "serial" });
-  let url: string | null;
-  const { name, email, password } = users.survey[0];
-  let addQuestion = "Add QuestionAdd a new question to your survey";
+async function createQuestion(page, questionType, questionDetails) {
+  await page
+    .locator("div")
+    .filter({ hasText: new RegExp(`^${addQuestion}`) })
+    .nth(1)
+    .click();
+  await page.getByRole("button", { name: questionType }).click();
+  await page.getByLabel("Question").fill(questionDetails.question);
+  // ... other common actions
+}
 
   test("Create Survey", async ({ page }) => {
     await signUpAndLogin(page, name, email, password);
