@@ -20,15 +20,15 @@ export function Connect({ environment, webAppUrl }: { environment: TEnvironment;
     router.push("/");
   };
   useEffect(() => {
-    const handleVisibilityChange = async () => {
-      if (document.visibilityState === "visible") {
-        const refetchedEnvironment = await fetchEnvironment(environment.id);
-        if (!refetchedEnvironment) return;
-        setLocalEnvironment(refetchedEnvironment);
-      }
-    };
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    const interval = setInterval(async () => {
+      const refetchedEnvironment = await fetchEnvironment(environment.id);
+      if (!refetchedEnvironment) return;
+      setLocalEnvironment(refetchedEnvironment);
+    }, 5000);
     return () => {
+      clearInterval(interval);
+    };
+  }, []);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
