@@ -12,7 +12,7 @@ import { fetchEnvironment, updateUserAction } from "../actions";
 
 export function Connect({ environment, webAppUrl }: { environment: TEnvironment; webAppUrl: string }) {
   const router = useRouter();
-  const [loading, setloading] = useState(false);
+  const [loading, setLoadingState] = useState(false);
   const [localEnvironment, setLocalEnvironment] = useState(environment);
 
   const goToProduct = () => {
