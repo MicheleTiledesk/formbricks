@@ -39,9 +39,9 @@ export function InviteTeamMate({ team, environmentId }: InviteTeamMateProps) {
       await inviteTeamMateAction(team.id, email, "developer", inviteMessage);
       toast.success("Invite sent successful");
     } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
+      console.error(error);
+      toast.error("An unexpected error occurred");
+    }
         toast.error("An unexpected error occurred");
       }
     }
