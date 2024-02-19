@@ -74,13 +74,13 @@ type TGetSignedUrlResponse =
       timestamp: number;
       uuid: string;
     };
-  };
-
-const getS3SignedUrl = async (fileKey: string): Promise<string> => {
-  const [_, accessType] = fileKey.split("/");
-  const expiresIn = accessType === "public" ? 60 * 60 : 10 * 60;
-  const revalidateAfter = accessType === "public" ? expiresIn - 60 * 5 : expiresIn - 60 * 2;
-
+  const PUBLIC_EXPIRY_TIME = 60 * 60;
+  const PRIVATE_EXPIRY_TIME = 10 * 60;
+  const PUBLIC_REVALIDATE_TIME = PUBLIC_EXPIRY_TIME - 60 * 5;
+  const PRIVATE_REVALIDATE_TIME = PRIVATE_EXPIRY_TIME - 60 * 2;
+  
+  const expiresIn = accessType === "public" ? PUBLIC_EXPIRY_TIME : PRIVATE_EXPIRY_TIME;
+  const revalidateAfter = accessType === "public" ? PUBLIC_REVALIDATE_TIME : PRIVATE_REVALIDATE_TIME;
   return unstable_cache(
     async () => {
       const getObjectCommand = new GetObjectCommand({
