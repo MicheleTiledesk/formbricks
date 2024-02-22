@@ -25,7 +25,7 @@ export default async function EnvironmentLayout({ children, params }) {
 
   const team = await getTeamByEnvironmentId(params.environmentId);
   if (!team) {
-    throw new Error("Team not found");
+    throw new NotFoundError("Team associated with the given environment ID not found");
   }
 
   return (
