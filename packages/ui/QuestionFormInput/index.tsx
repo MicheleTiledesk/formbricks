@@ -78,11 +78,11 @@ const QuestionFormInput = React.forwardRef(
     const [recallQuestions, setRecallQuestions] = useState<TSurveyQuestion[]>(
       text.includes("#recall:") ? getRecallQuestions(text, localSurvey) : []
     );
-    const filteredRecallQuestions = Array.from(new Set(recallQuestions.map((q) => q.id))).map((id) => {
-      return recallQuestions.find((q) => q.id === id);
-    });
-    const [fallbacks, setFallbacks] = useState<{ [type: string]: string }>(
-      text.includes("/fallback:") ? getFallbackValues(text) : {}
+    const filteredRecallQuestions = useMemo(() => {
+      return Array.from(new Set(recallQuestions.map((q) => q.id))).map((id) => {
+        return recallQuestions.find((q) => q.id === id);
+      });
+    }, [recallQuestions]);
     );
 
     // Hook to synchronize the horizontal scroll position of highlightContainerRef and inputRef.
