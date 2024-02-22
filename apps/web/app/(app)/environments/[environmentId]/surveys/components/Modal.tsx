@@ -23,44 +23,44 @@ export default function Modal({
 
   const calculateScaling = () => {
     let scaleValue = "1";
-
-    if (previewMode === "mobile") {
-      scaleValue = "1";
-    } else {
-      if (windowWidth > 1600) {
-        scaleValue = "1";
-      } else if (windowWidth > 1200) {
-        scaleValue = ".9";
-      } else if (windowWidth > 900) {
-        scaleValue = ".8";
-      } else {
-        scaleValue = "0.7";
-      }
-    }
-
     let placementClass = "";
-
-    if (placement === "bottomLeft") {
-      placementClass = "bottom left";
-    } else if (placement === "bottomRight") {
-      placementClass = "bottom right";
-    } else if (placement === "topLeft") {
-      placementClass = "top left";
-    } else if (placement === "topRight") {
-      placementClass = "top right";
+  
+    switch (previewMode) {
+      case "mobile":
+        scaleValue = "1";
+        break;
+      default:
+        if (windowWidth > 1600) {
+          scaleValue = "1";
+        } else if (windowWidth > 1200) {
+          scaleValue = ".9";
+        } else if (windowWidth > 900) {
+          scaleValue = ".8";
+        } else {
+          scaleValue = "0.7";
+        }
     }
-
+  
+    switch (placement) {
+      case "bottomLeft":
+        placementClass = "bottom left";
+        break;
+      case "bottomRight":
+        placementClass = "bottom right";
+        break;
+      case "topLeft":
+        placementClass = "top left";
+        break;
+      case "topRight":
+        placementClass = "top right";
+        break;
+    }
+  
     return {
       transform: `scale(${scaleValue})`,
       transformOrigin: placementClass,
     };
   };
-
-  const scalingClasses = calculateScaling();
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
